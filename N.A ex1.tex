@@ -1,0 +1,86 @@
+\documentclass{ctexart}
+\usepackage{graphicx} %插入图片的宏包
+\usepackage{diagbox}
+\usepackage{float} %设置图片浮动位置的宏包
+\usepackage{subfigure}
+\title{Numerical Analysis Ex1}
+\date{25-09-2022}
+\author{王惠恒 3200300395}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=20mm,
+ top=5mm,
+ }
+\begin{document}
+\maketitle
+I：(a)The width of the interval at the $n^{th}$ step is $\frac{1}{2^{n-1}}$.(b)Let the midpoint be $c_n=\frac{1}{2}(b_n+a_n)$.The distance between the root $r$ and the midpoint can be expressed as $$|c_n-r| \leq 2^{-(n+1)}(b_0-a_0)=2^{-(n+1)}(2)=2^{-n}$$Thus, the maximum possible distance is $2^{-n}$.\\
+
+II:As the relative error is not greater than $\epsilon$, we know that
+$$\frac{|x_n-r|}{r} \leq \frac{|b_n-a_n|}{r}= \frac{1}{2^nr}(b_0-a_0)$$
+where $r$ is the true solution and $x_n$ is the approximate value.Here we take $\frac{1}{2^nr}(b_0-a_0)$ as $\epsilon$.Since $r \geq a_0$, we have
+$$\frac{1}{2^na_0}(b_0-a_0) \leq \epsilon$$
+$$-nlog2-loga_0+log(b_0-a_0) \leq log \epsilon$$
+$$n \geq \frac{log(b_0-a_0)-log \epsilon -loga_0}{log 2}$$
+Proven.
+\\
+
+III:Given that $p(x)=4x^3-2x^2+3=0$ with the starting point $x_0=-1$.We use the Newton's method stated below to get the approximate answer for 4 times.By hand calculate, $p'(x)=12x^2-4x$.
+$$x_{n+1}=x_n-\frac{p(x_n)}{p'(x_n)},n \in N$$
+\begin{table}[!htbp]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+    \hline
+    \diagbox{n}{functions}&$x_n$&$p(x_n)$&$p'(x_n)$\\
+    \hline
+    $n=0$&$-1$&$-3$&$16$\\
+    \hline
+    $n=1$&$-0.812500$&$-0.465820$&$11.171875$\\
+    \hline  $n=2$&$-0.770804$&$-0.020136$&$10.212882$\\
+    \hline
+    $n=3$&$-0.768832$&$-0.000040$&$10.168560$\\
+    \hline
+    $n=4$&-$0.768828$&$-$&$-$\\
+    \hline
+    \end{tabular}
+\end{table}
+
+IV:First let the true solution be $r$, and naturally we know $f(r)=0$.As the given function $f$ is differentiable, use Taylor's expansion at $r$,then we get
+$$f(x)=f(r)+f'(\xi)(x-r) \>\> , \xi=r+ \theta(x-r),0<\theta<1 $$
+$$f(x_n)=f'(\xi)(x_n-r) \>\> , \xi=r+ \theta(x_n-r),0<\theta<1 $$
+Let the error of Newton's method at step n be $e_n$ , $x_n=r+e_n$ and substitute in $x_{n+1}=x_n-\frac{f(x_n)}{f'(x_0)}$.
+$$f(x_n)=f'(\xi)(e_n) \>\> , \xi=r+ \theta(x_n-r),0<\theta<1$$
+$$r+e_{n+1}=r+e_n-\frac{f'(\xi)(e_n)}{f'(x_0)}$$
+$$e_{n+1}=e_n[1-\frac{f'(\xi)}{f'(x_0)}]$$
+Thus,by comparing to $e_{n+1}=Ce^s_n$ , $C=1-\frac{f'(\xi)}{f'(x_0)},\xi=r+ \theta(x_n-r),0<\theta<1, \>\> s=1$\\
+
+V:By comparing to the fixed-point iteration method, take $g(x_n)=tan^{-1}x_n$. As we know $g(x_n)$ is continuous on $(-\frac{\pi}{2},\frac{\pi}{2})$ ,now we prove the contraction on it. $\forall x,y \in (-\frac{\pi}{2},\frac{\pi}{2})$,we have
+$$|g(x)-g(y)|=|tan^{-1}x-tan^{-1}y|=|(tan^{-1} \xi)' (x-y)| \leq \lambda |x-y|$$
+where $\lambda$ satisfies $0<\lambda=\frac{1}{1+ (\xi)^2}<1$.By Theorem 1.38, there is a unique fixed point and the iteration will converge to it.
+\\
+
+VI:Let $x_{n+1}=g(x_n)=\frac{1}{p+x_n}$.As $p>1$ , $\forall n \in N$ , $0<x_n<1$ , thus $g(x_n)$ is continuous. $\forall x,y$
+$$|g(x)-g(y)|=|\frac{1}{p+x}-\frac{1}{p+y}|=|\frac{x-y}{(p-x)(p-y)}| \leq \lambda |x-y|$$
+where $\lambda$ satisfies $0< \lambda=\frac{1}{(p-x)(p-y)}<1$.By Theorem 1.38, there is a unique fixed point and the iteration will converge to it. Now we start to find the value of the fixed point. As $ \lim\limits_{n \to \infty} x_{n+1}=\lim\limits_{n \to \infty} x_n := x$ ,
+$$x=\frac{1}{p+x}$$
+$$\frac{1}{x}=p+x$$
+$$x^2+px-1=0$$
+$$x=\frac{-p \pm \sqrt{p^2+4}}{2}$$
+
+VII:The relative error is not an appropriate measure method.By Theorem 1.13, $c_n=\frac{1}{2^{n-1}}(b_0+a_0)$,let $\alpha$ be the true solution.
+\\When $\alpha \neq 0$ 
+$$|c_n-\alpha|=|\frac{1}{2^{n-1}}(b_0+a_0) -\alpha| \leq 2^{-(n+1)}(b_0-a_0)$$
+$$\frac{2}{2^n}(b_0+a_0)-|\alpha| \leq \frac{1}{2} \cdot \frac{1}{2^n}(b_0-a_0)$$
+$$|\alpha| \geq \frac{1}{2^n} (\frac{3}{2}b_0+\frac{5}{2}a_0)$$
+$$n \geq \frac{log(\frac{3}{2}b_0+\frac{5}{2}a_0)-log|\alpha|}{log 2}$$
+When $\alpha = 0$,we may consider it independently by setting a condition in the program. The condition could be 
+\begin{verbatim}
+    if(r==0&&f(r)==0){
+    return r;
+    }
+    else 
+    (The recurrence of bisection)
+\end{verbatim}
+
+\end{document}
