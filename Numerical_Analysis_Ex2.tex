@@ -1,0 +1,264 @@
+\documentclass{ctexart}
+\usepackage{graphicx} %插入图片的宏包
+\usepackage{diagbox}
+\usepackage{float} %设置图片浮动位置的宏包
+\usepackage{subfigure}
+\usepackage{amsmath}
+\title{Numerical Analysis Ex2}
+\date{16-10-2022}
+\author{王惠恒 3200300395}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=20mm,
+ top=5mm,
+ }
+\begin{document}
+\maketitle
+\textbf{I}:(a)Given that $f(x)=\frac{1}{x}$ and its second derivative is $f''(x)=\frac{2}{x^3}$.Use Lagrange Formula , we can get
+\begin{align*}
+    p_1(f;x)&=1 \cdot \frac{x-2}{1-2} +\frac{1}{2} \cdot \frac{x-1}{2-1}\\
+    &=-\frac{1}{2}x+\frac{3}{2}
+\end{align*}
+then substitute into the linear interpolation, we can get
+\begin{align*}
+    L.H.S&=\frac{1}{x}+\frac{1}{2}x-\frac{3}{2}\\
+    &=\frac{(x-1)(x-2)}{2x}\\
+    R.H.S&=f''(\xi (x))\frac{(x-1)(x-2)}{2}\\
+    &=\frac{2}{(\xi (x))^3}\frac{(x-1)(x-2)}{2}
+\end{align*}
+By comparing, we can determine $\xi (x)$ explicitly as $\xi(x)=\sqrt[3]{2x} $
+
+(b)For $x \in [1,2]$,as $\xi (x)$ is a monotonically increasing function, $max{\xi (x)}=\sqrt[3]{4}$,$min {\xi (x)}=\sqrt[3]{2}$ 
+and $minf''(\xi (x))=1$.\\
+
+\textbf{II}:Let $h(x) \in P_m^+$,it's particularly in the form of $\sqrt{f(x)}$,as we want to make sure $h(x) \geq 0$.Given that $p(x) \in P_{2n}^+$ such that $p(x_i)=f_i$,thus we can directly let $p(x_i)=q^2(x_i)=f_i$.By Lagrange Formula, we can get
+\begin{align*}
+    q(x_i)&=\sum_{i=0}^{n} \sqrt{f_i} \prod_{j=0,j \neq i}^{n} \frac{x-x_j}{x_i-x_j}\\
+    p(x_i)&=q^2(x_i)\\
+    p(x_i)&=(\sum_{i=0}^{n} \sqrt{f_i} \prod_{j=0,j \neq i}^{n} \frac{x-x_j}{x_i-x_j})^2
+\end{align*}
+
+\textbf{III}:(a)For the first term,
+$$f[t,t+1]=\frac{f(t+1)-f(t)}{t+1-t}=e^{t+1}-e^t=\frac{(e-1)^1}{1!}e^t$$
+hence ,it is true for the case of first term.Now assume that it is true for the $(n-1)$th term.
+$$f[t,t+1,t+2,...,t+n-1]=\frac{(e-1)^{n-1}}{(n-1)!}e^t$$
+For the case of $n$th term , 
+\begin{align*}
+    f[t,t+1,t+2,...,t+n]&=\frac{f[t+1,t+2,...,t+n]-f[t,t+1,t+2,...,t+n-1]}{t+n-t}\\
+   &=\frac{\frac{(e-1)^n}{(n-1)!}e^{t+1}-\frac{(e-1)^{n-1}}{(n-1)!}e^t}{n}\\
+   &=\frac{(e-1)^{n-1}e^t(e-1)}{n!}=\frac{(e-1)^n}{n!}e^t
+\end{align*}
+it is true for the case of $n$th term. In conclusion, it is universally true for $n \in N$.
+
+(b) $\exists \xi \in (0,n) , f[0,1,2,...,n]=\frac{1}{n!}f^{(n)}(\xi)$,and after calculate we have $f^{(n)}(x)=e^x$.By the induction in (a),take $t=0$,
+\begin{align*}
+    \frac{(e-1)^n}{n!}&=\frac{e^{\xi}}{n!}\\
+    (e-1)^n&=e^{\xi}\\
+    \xi&=nln(e-1)>\frac{n}{2}
+\end{align*}
+Hence, $\xi$ is located to the right of the midpoint.
+\\
+
+
+\textbf{IV}:(a)Use the given results $f(0)=5,f(1)=3,f(3)=5,f(4)=12$ to construct a table 
+\begin{table}[!htbp]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    $x_0=0$&$5$&-&-&-\\
+    \hline
+    $x_1=1$&$3$&$-2$&-&-\\
+    \hline 
+    $x_2=3$&$5$&$1$&$1$&-\\
+    \hline
+    $x_3=4$&$12$&$7$&$2$&$\frac{1}{4}$\\
+    \hline
+    \end{tabular}
+\end{table}
+From the table above, we know that
+\begin{align*}
+    p_3(f;x)&=5-2x+x(x-1)+\frac{1}{4}x(x-1)(x-3)\\
+    &=\frac{1}{4}x^3-\frac{9}{4}x+5
+\end{align*}
+
+(b)Simply denote $p_3(f;x):=p_3(x)$. $x \in (1,3)$
+\begin{align*}
+    p_3'(x)&=\frac{3}{4}x^2-\frac{9}{4}=0\\
+    x&=\pm \sqrt{3}\\
+    p_3''(x)&=\frac{3}{2}x\\
+    p_3''(\sqrt{3})&=\frac{3\sqrt{3}}{2}>0(min)\\
+\end{align*}
+Take $x=\sqrt{3}$.The approximate value of the minimum is $p(\sqrt{3})=\frac{1}{4} \cdot 3^{\frac{3}{2}}-\frac{9}{4} \cdot 3^{\frac{1}{2}}+5 \simeq 2.4019$
+\\
+
+\textbf{V}:(a) Given that $f(x)=x^7$, to compute $f[0,1,1,1,2,2]$, first we should know $f[x_0,x_0,x_0,...,x_0]=\frac{1}{n!}f^{(n)}(x_0)$,where $x_0$ is repeated $n+1$ times ,then we may construct a table. For your reference:$f'(x)=7x^6,f''(x)=42x^5$
+\begin{table}[!htbp]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|c|}
+    \hline
+    $x_0=0$&$0$&-&-&-&-&-\\
+    \hline
+    $x_1=1$&$1$&$1$&-&-&-&-\\
+    \hline 
+    $x_2=1$&$1$&$7$&$6$&-&-&-\\
+    \hline
+    $x_3=1$&$1$&$7$&$21$&$15$&-&-\\
+    \hline
+    $x_4=2$&$128$&$127$&$120$&$99$&$42$&-\\
+    \hline
+    $x_5=2$&$128$&$448$&$321$&$201$&$102$&$30$\\
+    \hline
+    \end{tabular}
+\end{table}
+\\
+From the table above,we know that 
+$$p(x)=x+6x(x-1)+15x(x-1)^2+42x(x-1)^3+30x(x-1)^3(x-2)$$
+ANS:$f[0,1,1,1,2,2]=30$
+
+(b)The fifth derivative of f is $f^{(5)}=2520x^2$.We can solve $\xi$ by
+$$f^{(5)}(\xi )=2520\xi^2=30$$
+\begin{align*}
+    \xi^2&=\frac{1}{84}\\
+    \xi&=\pm \frac{\sqrt{21}}{42}
+\end{align*}
+As $\xi \in (0,2)$,hence the true value of $\xi=\frac{\sqrt{21}}{42}$\\
+
+
+\textbf{VI}:Use the given data $f(0)=1,f(1)=2,f'(1)=-1,f(3)=f'(3)=0$ to construct a table.
+
+\begin{table}[!htbp]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+    $x_0=0$&$1$&-&-&-&-\\
+    \hline
+    $x_1=1$&$2$&$1$&-&-&-\\
+    \hline 
+    $x_2=1$&$2$&$-1$&$-2$&-&-\\
+    \hline
+    $x_3=3$&$0$&$-1$&$0$&$\frac{2}{3}$&-\\
+    \hline
+    $x_4=3$&$0$&$0$&$\frac{1}{2}$&$\frac{1}{4}$&$-\frac{5}{36}$\\
+    \hline
+    \end{tabular}
+\end{table}
+From the table we know that
+$$p(x)=1+x-2x(x-1)+\frac{2}{3}x(x-1)^2-\frac{5}{36}x(x-1)^2(x-3)$$\\
+ANS:$f(2)\simeq p(2)=\frac{11}{18}$\\
+(b)Maximum possible error is the expression of $f(x)-p(x)=\frac{f^{(5)}(\xi)}{5!}x(x-1)^2(x-3)^2$.Now we estimate the upper bound.
+\begin{align*}
+    |f(2)-p(2)|&=|\frac{f^{(5)(\xi)}}{5!}(2)(2-1)^2(2-3)^2|\\
+    &=|\frac{f^{(5)}(\xi)}{60}|\\
+    &\leq \frac{M}{60}\\
+\end{align*}
+
+\textbf{VII}:Use Lagrange Formula,we can get
+\begin{align*}
+    f[x_0,x_1,...,x_n]&=\sum_{i=0}^{n} \frac{f(x_i)}{\prod_{j=1,j \neq i}^{n}(x_i-x_j)}\\
+    &=\sum_{i=0}^{n}\frac{(-1)^{n-i}f(x+ih)}{h^ni!(n-i)!}\\
+    &=\sum_{i=0}^{n}(-1)^{n-i}C_n^if(x+ih)\\
+    &=\frac{\Delta ^n f(x)}{h^nn!}\\
+    h^nn!f[x_0,x_1,...,x_n]&=\Delta^nf(x)
+\end{align*}
+Now we prove $\bigtriangledown ^kf(x)=k!h^kf[x_0,x_{-1},...,x_{-k}]$ by mathematical induction, the other one is similarly could be proven.For the first case,
+\begin{align*}
+    \bigtriangledown f(x)&=f(x)-f(x-h)\\
+    &=f(x_0)-f(x_{-1})\\
+    &=(x_0-x_{-1})f([x_0,x_{-1}])\\
+    &=1!h^1f[x_0,x_{-1}]
+\end{align*}
+it is true for the case of $n=1$.Now assume that it is true for the $(n-1)$th term.
+$$\bigtriangledown ^{n-1}f(x)=(n-1)!h^{n-1}f[x_0,x_{-1},...,x_{-(n-1)}]$$
+For the case of $n$th term
+\begin{align*}
+    \bigtriangledown ^n f(x)&=\bigtriangledown ^{n-1}f(x)-\bigtriangledown ^{n-1} f(x-h)\\
+    &=(n-1)!h^{n-1}f[x_0,x_{-1},...,x_{-(n-1)}]-(n-1)!h^{n-1}f[x_{-1},...,x_{-n}]\\
+    &=(n-1)!h^{n-1}(x_0-x_{-n})f[x_0,x_{-1},...,f_{-n}]\\
+    &=(n-1)!h^{n-1}(x-(x-nh))f[x_0,x_{-1},...,f_{-n}]\\
+    &=n!h^nf[x_0,x_{-1},...,x_{-n}]
+\end{align*}
+it is true of the $n$term.In conclusion,it is universally true for $k=n \in N$.\\
+
+\textbf{VIII}:For your reference:$f[x_0]=f(x_0),\frac{\partial}{\partial x_0}f[x_0]=f'(x_0)=f[x_0,x_0]$.Prove by induction:\\
+For the first term:
+\begin{align*}
+    \frac{\partial}{\partial x_0}f[x_0,x_1]&=\frac{\partial}{\partial x_0}(\frac{f[x_1]-f[x_0]}{x_1-x_0})\\
+    &=\frac{(x_1-x_0)(\frac{\partial}{\partial x_0}(-f[x_0]))-(f[x_1]-f[x_0])(-1)}{(x_1-x_0)^2}\\
+    &=-\frac{(x_1-x_0)f[x_0,x_0]}{(x_1-x_0)^2}+\frac{f[x_0,x_1]}{x_1-x_0}\\
+    &=\frac{f[x_0,x_1]-f[x_0,x_0]}{x_1-x_0}\\
+    &=f[x_0,x_0,x_1]\\
+\end{align*}
+it is true for the case of $n=1$.Now assume that the $(n-1)$th term is true.
+$$\frac{\partial}{\partial x_0}f[x_0,x_1,...,x_{n-1}]=f[x_0,x_0,x_1,...,x_{n-1}]$$
+For the case of $n$th term:
+\begin{align*}
+    \frac{\partial}{\partial x_0}f[x_0,x_1,...,x_n]&=\frac{\partial}{\partial x_0}(\frac{f[x_1,...,x_n]-f[x_0,x_1,...,x_{n-1}]}{x_n-x_0})\\
+    &=\frac{(x_n-x_0)\frac{\partial}{\partial x_0}(-f[x_0,x_1,...,x_{n-1}])-(f[x_1,...,x_n]-f[x_0,x_1,...,x_{n-1}])(-1)}{(x_n-x_0)^2}\\
+    &=-\frac{(x_n-x_0)f[x_0,x_0,x_1,...,x_{n-1}]}{(x_n-x_0)^2}+\frac{f[x_0,x_1,...,x_n]}{x_n-x_0}\\
+    &=\frac{f[x_0,x_1,...,x_n]-f[x_0,x_0,x_1,...,x_{n-1}]}{x_n-x_0}\\
+    &=f[x_0,x_0,x_1,...,x_n]
+\end{align*}
+it is true for the $n$th term.In conclusion, it is universally true for $n \in N$.
+
+\textbf{IX}:Let 
+\begin{align*}
+    p(x)&=a_0x^n+a_1x^{n-1}+...+a_n\\
+    \frac{1}{a_0}p(x)&=x^n+\frac{a_1}{a_0}x^{n-1}+...+\frac{a_n}{a_0} \>\>\>\>(a_0 \neq 0)\\
+    \frac{1}{a_0}p(x)&:=x^n+b_1x^{n-1}+...+b_n\\
+\end{align*}
+then we simply denote $q(x)=\frac{1}{a_0}p(x)$.For your reference, $T_n(x)=cos(n arccos x)$,By Chebyshev, we can get 
+$$\max_{x \in [-1,1]} |\frac{T_n(x)}{2^{n-1}}| \leq \max_{x \in [-1,1]} |q(x)|<\frac{1}{2^{n-1}}$$
+hence,by Corollary 2.45. we have 
+\begin{align*}
+    \max_{x \in [-1,1]} |q(x)| \geq \frac{1}{2^{n-1}}\\
+    \frac{1}{a_0}\max_{x \in [-1,1]} |p(x)| \geq \frac{1}{2^{n-1}}\\
+    \max_{x \in [-1,1]} |p(x)| \geq \frac{a_0}{2^{n-1}}\\
+    \min \max_{x \in [-1,1]} |p(x)|=\frac{a_0}{2^{n-1}}
+\end{align*}
+The statement above has assumed that $[a,b]=[-1,1]$.If there is an interval which is not general as $[-1,1]$, we may use a contraction mapping to standardize it.As well as the mapping is a bijection,we know that isomorphism takes the same answer.
+\\
+
+\textbf{X}:By the definition of $||f||_{\infty}=\max_{x \in [-1,1]}|f(x)|$,and $T_n(x)=cos(n arccos x)$,we can observe that 
+$||\hat{p}_n||_\infty=\frac{1}{|T_n(a)|}$.The equal sign holds when $x=a$.Now prove $||\hat{p}_n(x)||_\infty < ||p(x)||_\infty$ when $x \neq a$.\\
+When $x=cos\frac{k\pi}{n},k \in Z$,we have $\hat{p}_n(cos\frac{k\pi}{n})=\frac{(-1)^k}{T_n(a)}$.Let $h(x_k)=p(x_k)-p_n(x_k)$.If $||p||_\infty<\frac{1}{|T_n(a)|}$,then $h(x_0)h(x_1)<0\>\>,\>\>h(x_1)h(x_2)<0,...,h(x_{n-1})h(x_n)<0$,thus there exist $n$ of roots.But $x=a$ is a root too,it contradicts with the definition of $P_n^a$.Thus, the statement is true. \\
+(Discussed with Ngoo Ling Hui 3200300299)
+\\
+
+\textbf{XI}:First proof:${\forall k=0,1,...,n},\forall t \in (0,1),b_{n,k}>0$\\
+From the definition of $b_{n,k}(t)=C_n^kt^k(1-t)^{n-k}$
+\begin{align*}
+    C_n^k=\frac{n!}{(n-k)!k!}&>0\\
+    t^k&>0\\
+    (1-t)&>0\\
+    (1-t)^{n-k}&>0\\
+    b_{n,k}(t)&>0
+\end{align*}
+Second proof:$\sum_{k=0}^{n}b_{n,k}(t)=1$
+\begin{align*}
+    1&=t+1-t\\
+    &=[(t+1)-t]^n\\
+    &=\sum_{k=0}^{n}C_n^kt^k(1-t)^k\\
+    &=\sum_{k=0}^{n}b_{n,k}(t)
+\end{align*}
+Third proof:$\sum_{k=0}^{n}kb_{n,k}(t)=nt$
+$$(x+y)^n=\sum_{k=0}^{n}C_n^kx^ky^{n-k}$$
+Differentiate with respect to $x$, and multiply through both sides with $x$,we can get
+$$nx(x+y)^{n-1}=\sum_{k=0}^{n}C_n^kkx^ky^{n-k}$$
+Let $x=t,y=1-t$,then we proved.
+$$nt=\sum_{k=0}^{n}C_n^kkt^k(1-t)^{n-k}=\sum_{k=0}^{n}kb_{n,k}(t)$$
+Fourth proof:$\sum_{k=0}^{n}(k-nt)^2b_{n,k}(t)=nt(1-t)$\\
+From the third proof,
+$$nx(x+y)^{n-1}=\sum_{k=0}^{n}C_n^kkx^ky^{n-k}$$
+Differentiate with respect to $x$ and multiply through both sides with $x$,we can get
+$$nx(x+y)^{n-1}+n(n-1)x^2(x+y)^{n-2}=\sum_{k=0}^{n}C_n^kk^2x^ky^{n-k}$$
+Let $x=t,y=1-t$,then we get
+$$nt+n(n-1)t^2=\sum_{k=0}^{n}k^2b_{n,k}(t)$$
+\begin{align*}
+    \sum_{k=0}^{n}(k-nt)^2b_{n,k}(t)&=\sum_{k=0}^{n}k^2b_{n,k}(t)-2nt\sum_{k=0}^{n}kb_{n,k}(t)+\sum_{k=0}^{n}(nt)^2b_{n,k}(t)\\
+    &=nt+n(n-1)t^2-2(nt)^2+(nt)^2\\
+    &=nt(1-t)
+\end{align*}
+
+\end{document}
